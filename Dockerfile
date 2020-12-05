@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 LABEL maintainer="npmarks@gmail.com"
-RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - &&\
-  apt-get update && \
-  apt-get install -y software-properties-common && \
+RUN apt-get update && \
+  apt-get install -y software-properties-common curl && \
+  curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - &&\
   apt-add-repository \
   "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" \
   && apt-get install --no-install-recommends --yes \
