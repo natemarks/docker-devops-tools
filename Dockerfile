@@ -13,5 +13,5 @@ RUN apt-get update && \
 
 RUN pip3 install ansible
 # RUN set -o pipefail && wget -O - https://some.site | wc -l > /number
-RUN curl https://github.com/gruntwork-io/terragrunt/releases/download/v0.26.7/terragrunt_linux_amd64 \
+RUN curl -fsSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.26.7/terragrunt_linux_amd64 \
   --output /usr/local/bin/terragrunt && chmod 755 /usr/local/bin/terragrunt
