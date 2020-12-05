@@ -11,5 +11,5 @@ RUN apt-get update && \
   terraform \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -y ansible
+RUN pip3 install ansible
 # RUN set -o pipefail && wget -O - https://some.site | wc -l > /number
