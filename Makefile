@@ -1,7 +1,6 @@
 .PHONY: clean help
 .DEFAULT_GOAL := help
 
-RELEASE_VERSION := $(shell cat VERSION.txt)
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 help: ## Show this help.
