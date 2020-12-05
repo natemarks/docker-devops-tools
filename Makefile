@@ -1,6 +1,7 @@
 .PHONY: clean help
 .DEFAULT_GOAL := help
 
+RELEASE_VERSION := $(shell cat VERSION.txt)
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 help: ## Show this help.
@@ -24,3 +25,12 @@ local_build: lint ## Run static code checks
 
 local_clean: ## Delete all local devops-tools images
 	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
+
+bump: ## bump version:  make PART=patch bump
+	rm -rf .venv
+	python3 -m venv .venv
+    ( \
+       source path/to/virtualenv/activate; \
+       pip install --upgrade pip setuptools; \
+       pip install bump2version $(PART); \
+    )
