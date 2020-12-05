@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+# ubuntu 2020 (focal)
+FROM ubuntu:focal-20201106
 LABEL maintainer="npmarks@gmail.com"
 RUN apt-get update && \
   apt-get install -y software-properties-common curl && \
@@ -11,7 +12,10 @@ RUN apt-get update && \
   terraform \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install ansible
+RUN pip3 install ansible \
+  pytest \
+  pytest-testinfra \
+  molecule
 # RUN set -o pipefail && wget -O - https://some.site | wc -l > /number
 RUN curl -fsSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.26.7/terragrunt_linux_amd64 \
   --output /usr/local/bin/terragrunt && chmod 755 /usr/local/bin/terragrunt

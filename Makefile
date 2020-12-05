@@ -21,3 +21,6 @@ lint: git-status ## Run static code checks
 local_build: lint ## Run static code checks
 	@echo Run static code checks
 	docker build --tag devops-tools:dev-latest --tag devops-tools:dev-$(COMMIT_HASH) .
+
+local_clean: ## Delete all local devops-tools images
+	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
