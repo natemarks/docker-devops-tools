@@ -28,8 +28,9 @@ local_clean: ## Delete all local devops-tools images
 bump: ## bump version:  make PART=patch bump
 	rm -rf .venv
 	python3 -m venv .venv
-    ( \
-       source path/to/virtualenv/activate; \
-       pip install --upgrade pip setuptools; \
-       pip install bump2version $(PART); \
-    )
+	( \
+			source path/to/virtualenv/activate; \
+			pip install --upgrade pip setuptools; \
+			pip install bump2version; \
+			bump2version $(PART); \
+	)
