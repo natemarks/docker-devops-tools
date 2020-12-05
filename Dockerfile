@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 LABEL maintainer="npmarks@gmail.com"
-RUN sudo apt-add-repository \
+RUN apt-add-repository \
   "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" \
   && apt-get update && apt-get install --no-install-recommends --yes \
   curl \
