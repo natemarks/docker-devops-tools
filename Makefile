@@ -1,6 +1,7 @@
 .PHONY: clean help
 .DEFAULT_GOAL := help
 
+VERSION := 0.0.0
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 help: ## Show this help.
