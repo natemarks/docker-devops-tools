@@ -26,11 +26,11 @@ local_build: lint ## Run static code checks
 local_clean: ## Delete all local devops-tools images
 	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
 
-bump: ## bump version:  make PART=patch bump
+bump: lint ## bump version:  make PART=patch bump
 	rm -rf .venv
 	python3 -m venv .venv
 	( \
-			source .venv/bin/activate; \
+			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
 			pip install bump2version; \
 			bump2version $(PART); \
