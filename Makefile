@@ -14,5 +14,5 @@ git-status: ## Checks git status before executing build steps
 		exit 1; \
 	fi
 
-lint: git-status
+lint: git-status ## Run static code checks
 	@echo Run static code checks
