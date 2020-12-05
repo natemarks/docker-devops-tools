@@ -6,8 +6,7 @@ COMMIT_HASH := $(shell git rev-parse --short HEAD)
 help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-git-status:
-	@echo Checks git status before executing build steps
+git-status: ## Checks git status before executing build steps
 	@status=$$(git status --porcelain); \
 	if [ ! -z "$${status}" ]; \
 	then \
