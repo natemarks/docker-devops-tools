@@ -3,7 +3,7 @@
 
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
-help:           ## Show this help.
+help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 git-status: ## Checks git status before executing build steps
@@ -15,4 +15,8 @@ git-status: ## Checks git status before executing build steps
 	fi
 
 lint: git-status ## Run static code checks
+	@echo Run static code checks
+	shellcheck scripts/*.sh
+
+build: lint ## Run static code checks
 	@echo Run static code checks
