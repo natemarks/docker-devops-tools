@@ -1,8 +1,10 @@
 FROM ubuntu:20.04
 LABEL maintainer="npmarks@gmail.com"
-RUN apt-add-repository \
+RUN apt-get update && \
+  apt-get install -y software-properties-common && \
+  apt-add-repository \
   "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" \
-  && apt-get update && apt-get install --no-install-recommends --yes \
+  && apt-get install --no-install-recommends --yes \
   curl \
   python3 \
   packer \
