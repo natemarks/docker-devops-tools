@@ -29,7 +29,7 @@ bump: ## bump version:  make PART=patch bump
 	rm -rf .venv
 	python3 -m venv .venv
 	( \
-			source path/to/virtualenv/activate; \
+			source .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
 			pip install bump2version; \
 			bump2version $(PART); \
