@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 LABEL maintainer="npmarks@gmail.com"
 RUN sudo apt-add-repository \
-  "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+  "deb [arch=amd64] https://apt.releases.hashicorp.com focal main" \
   && apt-get update && apt-get install --no-install-recommends --yes \
   curl \
   python3 \
