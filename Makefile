@@ -1,4 +1,4 @@
-.PHONY: clean help
+.PHONY: lint pre_build_test help
 .DEFAULT_GOAL := help
 
 VERSION := 0.0.3
@@ -6,6 +6,18 @@ COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+
+rm_venv:
+	rm -rf .venv
+
+mk_venv: rm_venv
+	python3 -m venv .venv
+
+python_clean:
+	find . -name '*.pyc' -exec rm -f {} \;
+	find . -name '*.pyo' -exec rm -f {} \;
+	find . -name '__pycache__' -exec rm -rf {} \;
+	find . -name '*~' -exec rm -f  {} \;
 
 git-status: ## Checks git status before executing build steps
 	@status=$$(git status --porcelain); \
@@ -15,20 +27,36 @@ git-status: ## Checks git status before executing build steps
 		exit 1; \
 	fi
 
-lint: git-status ## Run static code checks
+lint: mk_venv  ## Run static code checks
 	@echo Run static code checks
 	shellcheck scripts/*.sh
 
-local_build: lint ## build the docker image locally with dev-latest/hash tag
+test: lint ## run tests before building the docker container
+	( \
+			. .venv/bin/activate; \
+			pip install --upgrade pip setuptools; \
+			pip install pytest pytest-testinfra; \
+			python3 -m pytest ./test/test_pre_build.py;\
+	)
+
+post_build_test: ## Run post build docker tests
+	( \
+			. .venv/bin/activate; \
+			pip install --upgrade pip setuptools; \
+			pip install pytest pytest-testinfra; \
+			python3 -m pytest ./test/test_post_build.py;\
+	)
+
+local_docker_build: test ## build the docker image locally with dev-latest/hash tag
 	@echo Run static code checks
 	docker build --tag devops-tools:dev-latest --tag devops-tools:dev-$(COMMIT_HASH) .
+
+local_build:  local_docker_build post_build_test
 
 local_clean: ## Delete all local devops-tools images
 	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
 
-bump: lint ## bump version:  make PART=patch bump
-	rm -rf .venv
-	python3 -m venv .venv
+bump: mk_venv lint ## bump version:  make PART=patch bump
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
