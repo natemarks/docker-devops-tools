@@ -19,7 +19,7 @@ lint: git-status ## Run static code checks
 	@echo Run static code checks
 	shellcheck scripts/*.sh
 
-local_build: lint ## buile the docker image locally with dev-latest/hash tag
+local_build: lint ## build the docker image locally with dev-latest/hash tag
 	@echo Run static code checks
 	docker build --tag devops-tools:dev-latest --tag devops-tools:dev-$(COMMIT_HASH) .
 
