@@ -37,3 +37,18 @@ ansible 2.10.3
   python version = 3.8.5 (default, Jul 28 2020, 12:59:40) [GCC 9.3.0]
 
 ```
+
+
+## Contributing
+
+Pull the project and run make test just to check your tools:
+```
+make test
+'''
+
+
+
+Assuming that works, built the  docker image locally and run the post build tests:
+```
+make local_build
+```
