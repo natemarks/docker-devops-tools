@@ -1,5 +1,7 @@
 This project builds a docker image with some commonly used tools. It's a just a convenient way to reproduce my pipeline context locally.
 
+https://docs.docker.com/engine/faq/#why-is-debian_frontendnoninteractive-discouraged-in-dockerfiles
+
 https://ubuntu.com/blog/we-reduced-our-docker-images-by-60-with-no-install-recommends
 
 https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
