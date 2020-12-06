@@ -11,7 +11,6 @@ RUN apt-get update && \
   unzip \
   curl \
   wget \
-  terraform \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install ansible \
