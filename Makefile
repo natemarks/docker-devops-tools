@@ -43,7 +43,7 @@ test: lint ## run tests before building the docker container
 			python3 -m pytest ./test/test_pre_build.py;\
 	)
 
-post_build_test: ## Run post build docker tests
+post_build_test: rm_venv mk_venv ## Run post build docker tests
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
