@@ -31,11 +31,4 @@ steps:
         sudo chmod a+r $(aws_creds.secureFilePath)
         . $(aws_creds.secureFilePath)
         aws s3 ls
-        make create_release_images
-
-  - task: Bash@3
-    inputs:
-      targetType: "inline"
-      script: |
-        . $(aws_creds.secureFilePath)
-        make post_build_test
+        make upload_release_images

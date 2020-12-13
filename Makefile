@@ -68,13 +68,16 @@ bump: mk_venv lint ## bump version:  make PART=patch bump
 			bump2version $(PART); \
 	)
 
-
 docker-login:
 	$$(aws ecr get-login --no-include-email  --region us-east-1)
 
-create_release_images: docker-login ## push images to registry and upload python package to artifacts
+build_release_image:
 	( \
        docker build --tag devops-tools:latest --tag devops-tools:$(VERSION) .; \
+    )
+
+upload_release_images: build_release_image post_build_test docker-login ## push images to registry and upload python package to artifacts
+	( \
        docker tag devops-tools:latest 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools; \
        docker tag devops-tools:$(VERSION) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
