@@ -45,7 +45,7 @@ Pull the project and run make test just to check your tools:
 ```
 make test
 '''
-
+  
 
 
 Assuming that works, built the  docker image locally and run the post build tests:

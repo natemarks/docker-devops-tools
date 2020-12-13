@@ -34,5 +34,8 @@ set -e
 set -x
 set -v
 
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+go get github.com/go-training/helloworld
+find / -type d -name helloworld -print
+go install github.com/go-training/helloworld
+find / -type f -name helloworld -print
+/root/go/bin/helloworld

@@ -11,6 +11,7 @@ RUN apt-get update && \
   unzip \
   curl \
   wget \
+  golang \
   && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install ansible \
@@ -18,6 +19,10 @@ RUN pip3 install ansible \
   pytest-testinfra \
   molecule \
   awscli
+
+# set python 3 as the default python version
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 \
+  && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
 RUN wget https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_linux_amd64.zip && unzip ./terraform_0.13.5_linux_amd64.zip -d /usr/local/bin/
 
@@ -27,6 +32,9 @@ RUN curl -fsSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.2
   --output /usr/local/bin/terragrunt && chmod 755 /usr/local/bin/terragrunt
 
 RUN wget https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_linux_amd64.zip && unzip ./packer_1.6.5_linux_amd64.zip -d /usr/local/bin
+
+COPY scripts /scripts
+RUN chmod -R 755 /scripts
 
 WORKDIR /azp
 CMD ["terraform" , "--version"]

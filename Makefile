@@ -19,6 +19,10 @@ python_clean:
 	find . -name '__pycache__' -exec rm -rf {} \;
 	find . -name '*~' -exec rm -f  {} \;
 
+
+docker-clean: ## remove all local docker images
+	-docker rmi -f $(docker images | grep devops-tools | tr -s ' ' | cut -d ' ' -f 3)
+
 git-status: ## Checks git status before executing build steps
 	@status=$$(git status --porcelain); \
 	if [ ! -z "$${status}" ]; \
@@ -47,9 +51,9 @@ post_build_test: ## Run post build docker tests
 			python3 -m pytest ./test/test_post_build.py;\
 	)
 
-local_docker_build: test ## build the docker image locally with dev-latest/hash tag
+local_docker_build: test ## build the docker image locally with latest/hash tag
 	@echo Run static code checks
-	docker build --tag devops-tools:dev-latest --tag devops-tools:dev-$(COMMIT_HASH) .
+	docker build --tag devops-tools:latest --tag devops-tools:$(COMMIT_HASH) .
 
 local_build:  local_docker_build post_build_test
 

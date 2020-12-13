@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import pytest
 
-DOCKER_CMD = "docker run -i devops-tools:dev-latest"
+DOCKER_CMD = "docker run --rm -i devops-tools:latest"
+GO_CMD = "set -e;go get github.com/go-training/helloworld;find / -type d -name helloworldddd -print;go install github.com/go-training/helloworld;find / -type f -name helloworld -print;/root/go/bin/helloworld"
 
 """ Run commands and check exit code
 
@@ -21,6 +22,9 @@ DOCKER_CMD = "docker run -i devops-tools:dev-latest"
         ("{} kubergrunt --version".format(DOCKER_CMD)),
         ("{} packer --version".format(DOCKER_CMD)),
         ("{} ansible --version".format(DOCKER_CMD)),
+        ("{} python3 --version".format(DOCKER_CMD)),
+        ("{} python --version".format(DOCKER_CMD)),
+        ("{}    ".format(DOCKER_CMD))
     ],
 )
 def test_file_contain(host, command):
