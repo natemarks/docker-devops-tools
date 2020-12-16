@@ -21,7 +21,7 @@ python_clean:
 
 
 docker-clean: ## remove all local docker images
-	-docker rmi -f $(docker images | grep devops-tools | tr -s ' ' | cut -d ' ' -f 3)
+	-docker rmi -f $(shell docker images | grep devops-tools | tr -s ' ' | cut -d ' ' -f 3)
 
 git-status: ## Checks git status before executing build steps
 	@status=$$(git status --porcelain); \
