@@ -29,9 +29,24 @@ test the exit code for each
         ("{} python3 --version".format(DOCKER_CMD),0),
         ("{} python --version".format(DOCKER_CMD),0),
         ("{} unzip --version".format(DOCKER_CMD),10),
-        ("{} ssh --version".format(DOCKER_CMD),255),
+        ("{} ssh --version".format(DOCKER_CMD),255)
     ],
 )
-def test_unzip_version(host, command,exit_code):
+def test_run_binaries(host, command,exit_code):
     cmd = host.run(command)
     assert cmd.rc == exit_code
+
+ANSIBLE_CFG = """[defaults]
+remote_tmp     = /tmp/.ansible-${USER}/tmp
+"""
+
+@pytest.mark.parametrize(
+    "command,exit_code",
+    [
+        ("{} cat /etc/ansible/ansible.cfg".format(DOCKER_CMD),0),
+    ],
+)
+def test_ansible_cfg(host, command,exit_code):
+    cmd = host.run(command)
+    assert cmd.rc == exit_code
+    assert cmd.stdout == ANSIBLE_CFG

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import pytest
 
-""" Check for things that should nbe in projet files
+""" Check for things that should be in project files
 
 """
 

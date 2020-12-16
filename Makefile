@@ -39,8 +39,8 @@ test: lint ## run tests before building the docker container
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
-			pip install pytest pytest-testinfra; \
-			python3 -m pytest ./test/test_pre_build.py;\
+			pip install pytest pytest-testinfra pytest-pycharm; \
+			python3 -m pytest ./test_pre_build.py;\
 	)
 
 post_build_test: rm_venv mk_venv ## Run post build docker tests
@@ -48,7 +48,7 @@ post_build_test: rm_venv mk_venv ## Run post build docker tests
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
 			pip install pytest pytest-testinfra; \
-			python3 -m pytest ./test/test_post_build.py;\
+			python3 -m pytest ./test_post_build.py;\
 	)
 
 local_docker_build: test ## build the docker image locally with latest/hash tag

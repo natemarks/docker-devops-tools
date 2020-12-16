@@ -36,6 +36,6 @@ RUN wget https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_linux_amd64.zi
 
 COPY scripts /scripts
 RUN chmod -R 755 /scripts
-
+COPY ansible/ /etc/ansible/
 WORKDIR /azp
 CMD ["terraform" , "--version"]
