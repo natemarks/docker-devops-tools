@@ -60,7 +60,7 @@ local_build:  local_docker_build post_build_test
 local_clean: ## Delete all local devops-tools images
 	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
 
-bump: mk_venv lint ## bump version:  make PART=patch bump
+bump: test ## bump version:  make PART=patch bump
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
