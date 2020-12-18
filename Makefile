@@ -7,13 +7,13 @@ COMMIT_HASH := $(shell git rev-parse --short HEAD)
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-rm_venv:
+rm_venv: ## use mk_venv instead
 	rm -rf .venv
 
-mk_venv: rm_venv
+mk_venv: rm_venv  ## delete and recreate venv
 	python3 -m venv .venv
 
-python_clean:
+python_clean: ## delete python cache files, pyc etc
 	find . -name '*.pyc' -exec rm -f {} \;
 	find . -name '*.pyo' -exec rm -f {} \;
 	find . -name '__pycache__' -exec rm -rf {} \;
@@ -43,7 +43,7 @@ test: lint ## run tests before building the docker container
 			python3 -m pytest ./test_pre_build.py;\
 	)
 
-post_build_test: rm_venv mk_venv ## Run post build docker tests
+post_build_test: mk_venv ## Run post build docker tests
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
