@@ -1,4 +1,4 @@
-This project builds a docker image with some commonly used tools. It's a just a convenient way to reproduce my pipeline context locally.
+This project builds a docker image with some commonly used tools. It's a just a convenient way to reproduce my pipeline context locally. 
 
 https://docs.docker.com/engine/faq/#why-is-debian_frontendnoninteractive-discouraged-in-dockerfiles
 
@@ -19,16 +19,16 @@ The image includes:
 ## Usage
 
 ```shell script
-docker run -it devops-tools:dev-latest terraform --version
+docker run -it devops-tools:latest terraform --version
 Terraform v0.14.0
 
-docker run -it devops-tools:dev-latest terragrunt --version
+docker run -it devops-tools:latest terragrunt --version
 terragrunt version v0.26.7
 
-docker run -it devops-tools:dev-latest packer --version
+docker run -it devops-tools:latest packer --version
 1.6.5
 
-docker run -it devops-tools:dev-latest ansible --version
+docker run -it devops-tools:latest ansible --version
 ansible 2.10.3
   config file = None
   configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
@@ -36,19 +36,4 @@ ansible 2.10.3
   executable location = /usr/local/bin/ansible
   python version = 3.8.5 (default, Jul 28 2020, 12:59:40) [GCC 9.3.0]
 
-```
-
-
-## Contributing
-
-Pull the project and run make test just to check your tools:
-```
-make test
-'''
-  
-
-
-Assuming that works, built the  docker image locally and run the post build tests:
-```
-make local_build
 ```

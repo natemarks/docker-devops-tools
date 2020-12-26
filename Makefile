@@ -60,12 +60,12 @@ local_build:  local_docker_build post_build_test
 local_clean: ## Delete all local devops-tools images
 	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
 
-bump: test ## bump version:  make PART=patch bump
+bump: test ## bump version:  make part=patch bump
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
 			pip install bump2version; \
-			bump2version $(PART); \
+			bump2version $(part); \
 	)
 
 docker-login:
@@ -78,8 +78,15 @@ build_release_image:
 
 upload_release_images: build_release_image post_build_test docker-login ## push images to registry and upload python package to artifacts
 	( \
-       docker tag devops-tools:latest 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools; \
        docker tag devops-tools:$(VERSION) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
+    )
+
+upload_dev_images: local_build docker-login ## push images to registry and upload python package to artifacts
+	( \
+       docker tag devops-tools:latest 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools; \
+       docker tag devops-tools:$(COMMIT_HASH) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
+       docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
+       docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
     )
