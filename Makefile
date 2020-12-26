@@ -1,7 +1,7 @@
 .PHONY: lint pre_build_test help
 .DEFAULT_GOAL := help
 
-VERSION := 0.0.12
+VERSION := 0.0.13
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 help: ## Show this help.
