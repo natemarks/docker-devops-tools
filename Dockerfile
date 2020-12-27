@@ -15,7 +15,7 @@ RUN apt-get update && \
   openssh-server \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install ans    ible \
+RUN pip3 install ansible \
   pytest \
   pytest-testinfra \
   molecule \
