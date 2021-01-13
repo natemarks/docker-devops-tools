@@ -1,7 +1,7 @@
 .PHONY: lint pre_build_test help
 .DEFAULT_GOAL := help
 
-VERSION := 0.0.15
+VERSION := 0.0.16
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
 
 help: ## Show this help.
@@ -39,7 +39,7 @@ test: lint ## run tests before building the docker container
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
-			pip install pytest pytest-testinfra pytest-pycharm; \
+			pip install -r requirements.txt; \
 			python3 -m pytest ./test_pre_build.py;\
 	)
 

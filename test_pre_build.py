@@ -11,7 +11,18 @@ import pytest
     [
         ("./Dockerfile", "WORKDIR /azp"),
         ("./Dockerfile", "ca-certificates"),
-        ("./Dockerfile", "molecule"),
+        ("./requirements.txt", "molecule"),
+        ("./requirements.txt", "ansible"),
+        ("./requirements.txt", "awscli"),
+        ("./requirements.txt", "bcrypt"),
+        ("./requirements.txt", "boto3"),
+        ("./requirements.txt", "botocore"),
+        ("./requirements.txt", "Jinja2"),
+        ("./requirements.txt", "json-logging"),
+        ("./requirements.txt", "pytest"),
+        ("./requirements.txt", "pytest-testinfra"),
+        ("./requirements.txt", "PyYAML"),
+        ("./requirements.txt", "yamllint"),
     ],
 )
 def test_file_contain(host, file_path, substring):
