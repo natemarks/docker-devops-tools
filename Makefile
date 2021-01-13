@@ -39,7 +39,7 @@ test: lint ## run tests before building the docker container
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
-			pip install pytest pytest-testinfra pytest-pycharm; \
+			pip install -r requirements.txt; \
 			python3 -m pytest ./test_pre_build.py;\
 	)
 
