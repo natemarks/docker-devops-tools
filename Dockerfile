@@ -15,14 +15,9 @@ RUN apt-get update && \
   openssh-server \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install ansible \
-  ansible-lint[yamllint] \
-  boto3 \
-  json_logging \
-  pytest \
-  pytest-testinfra \
-  molecule \
-  awscli
+COPY requirements.txt /requirements.txt
+
+RUN pip3 install -r /requirements.txt
 
 # set python 3 as the default python version
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 \
