@@ -4,8 +4,11 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
-- dev
-- release*
+  branches:
+    include:
+      - dev
+      - releasae*
+      - master
 
 pool:
   vmImage: "ubuntu-latest"
@@ -30,4 +33,4 @@ steps:
         sudo chmod a+r $(aws_creds.secureFilePath)
         . $(aws_creds.secureFilePath)
         aws s3 ls
-        make upload_dev_images
+        make upload_images
