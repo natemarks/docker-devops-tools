@@ -3,6 +3,7 @@
 
 VERSION := 0.0.16
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
+CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -93,7 +94,7 @@ upload_dev_images: local_build docker-login ## push images to registry and uploa
 
 upload_images:  ## run correct upload depending on the branch
 ifeq ($(CURRENT_BRANCH), $(MAIN_BRANCH))
-	@make upload_release_images
+	$(info CURRENT_BRANCH="$(CURRENT_BRANCH)")
 else
-	@make upload_dev_images
+	$(info CURRENT_BRANCH="$(CURRENT_BRANCH)")
 endif
