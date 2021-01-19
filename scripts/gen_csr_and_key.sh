@@ -106,11 +106,11 @@ msg "Generating CSR and key"
 
 openssl req -new -newkey rsa:2048 -nodes -out "$CSR_FILE_NAME" -keyout "$KEYFILE_FILE_NAME" -subj "/C=US/ST=Massachusetts/L=Lexington/O=Imprivata Inc/OU=CloudOps/CN=${domain}"
 
-msg "Check CSR:"
+msg "${GREEN}Check CSR:${NOFORMAT}"
 openssl req -text -noout -verify -in "$CSR_FILE_NAME"
 
-msg "Check key"
-openssl rsa -in "$KEYFILE_FILE_NAME" -check
+msg "${GREEN}Check key:${NOFORMAT}"
+openssl rsa -in "$KEYFILE_FILE_NAME" -check | grep 'RSA'
 
-msg "Paste the section below into the CSR field with the provider"
+msg "${GREEN}Paste the section below into the CSR field with the provider:${NOFORMAT}"
 cat "$CSR_FILE_NAME"
