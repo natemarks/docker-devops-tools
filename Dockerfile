@@ -7,6 +7,8 @@ RUN apt-get update && \
   packer \
   ca-certificates \
   jq \
+  less \
+  vim \
   git \
   unzip \
   curl \

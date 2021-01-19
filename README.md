@@ -14,6 +14,7 @@ The image includes:
  - ansible
  - molecule
  - pytest and pytest-testinfra
+ - ssl_gen_csr.py: python ssl stub script. starting piint for ssl automation
 
 
 ## Usage
