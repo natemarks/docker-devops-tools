@@ -6,6 +6,8 @@
 trigger:
   branches:
     include:
+      - dev
+      - release*
       - master
 
 pool:
@@ -31,4 +33,4 @@ steps:
         sudo chmod a+r $(aws_creds.secureFilePath)
         . $(aws_creds.secureFilePath)
         aws s3 ls
-        make upload_release_images
+        make upload_dev_images

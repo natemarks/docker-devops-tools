@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := help
 
 VERSION := 0.0.16
-COMMIT_HASH := $(shell git rev-parse --short HEAD)
+COMMIT_HASH := $(shell git rev-parse HEAD)
 
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
