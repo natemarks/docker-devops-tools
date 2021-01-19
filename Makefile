@@ -3,7 +3,7 @@
 
 VERSION := 0.0.16
 COMMIT_HASH := $(shell git rev-parse --short HEAD)
-CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)MAIN_BRANCH := main
+CURRENT_BRANCH := $(shell git branch --show-current)
 MAIN_BRANCH := master
 
 help: ## Show this help.
