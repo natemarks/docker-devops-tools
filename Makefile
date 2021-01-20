@@ -3,6 +3,7 @@
 
 VERSION := 0.0.16
 COMMIT_HASH := $(shell git rev-parse HEAD)
+MAIN_BRANCH := master
 
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
@@ -90,3 +91,10 @@ upload_dev_images: local_build docker-login ## push images to registry and uploa
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
     )
+
+# make part=patch branch=release_xyz release
+release: git-status ## checkout main, merge in relesae branch, bump nad push
+	$(info Merging branch $(branch) into $(MAIN_BRANCH) )
+	git checkout $(MAIN_BRANCH)
+	git pull --ff-only
+	@make part=$(part) bump
