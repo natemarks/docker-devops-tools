@@ -29,7 +29,9 @@ test the exit code for each
         ("{} python3 --version".format(DOCKER_CMD),0),
         ("{} python --version".format(DOCKER_CMD),0),
         ("{} unzip --version".format(DOCKER_CMD),10),
-        ("{} ssh --version".format(DOCKER_CMD),255)
+        ("{} ssh --version".format(DOCKER_CMD),255),
+        ("{} /scripts/gen_csr_and_key.sh --help".format(DOCKER_CMD),0),
+        ("{} /scripts/tarball_ssl_certs.sh --help".format(DOCKER_CMD),0)
     ],
 )
 def test_run_binaries(host, command,exit_code):
