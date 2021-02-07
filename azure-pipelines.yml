@@ -22,7 +22,7 @@ steps:
     name: aws_creds
     displayName: "Download source script to export AWS creds"
     inputs:
-      secureFile: "i-platform-dev-aws-creds.sh"
+      secureFile: "i-platform-dev-aws-creds-20210207.sh"
 
   - task: Bash@3
     inputs:
