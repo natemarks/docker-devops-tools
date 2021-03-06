@@ -33,6 +33,9 @@ RUN wget -q -O /usr/local/bin/kubergrunt "https://github.com/gruntwork-io/kuberg
 RUN curl -fsSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.26.7/terragrunt_linux_amd64 \
   --output /usr/local/bin/terragrunt && chmod 755 /usr/local/bin/terragrunt
 
+RUN curl -fsSL https://raw.githubusercontent.com/natemarks/git_cache_repo/main/mirror_repo.sh \
+  --output /usr/local/bin/mirror_repo.sh && chmod 755 /usr/local/bin/mirror_repo.sh
+
 RUN wget https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_linux_amd64.zip && unzip ./packer_1.6.5_linux_amd64.zip -d /usr/local/bin
 
 COPY scripts /scripts
