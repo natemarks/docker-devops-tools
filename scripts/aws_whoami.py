@@ -77,8 +77,7 @@ def parse_args(args):
 
 
 def main():
-    """ Main
-    """
+    """Main"""
     logger = get_logger()
     parser = parse_args(sys.argv[1:])
 

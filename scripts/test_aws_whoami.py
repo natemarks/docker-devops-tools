@@ -4,6 +4,7 @@
 import pytest
 from aws_whoami import parse_args
 
+
 @pytest.mark.parametrize(
     "argument_list,flag_attribute",
     [(["-v"], "verbose"), (["--verbose"], "verbose")],
