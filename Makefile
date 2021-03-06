@@ -125,3 +125,11 @@ release: git-status ## checkout main, merge in relesae branch, bump nad push
 	git checkout $(MAIN_BRANCH)
 	git pull --ff-only
 	@make part=$(part) bump
+
+
+upload_images:  ## run correct upload depending on the branch
+ifeq ($(CURRENT_BRANCH), $(MAIN_BRANCH))
+	@make upload_release_images
+else
+	@make upload_dev_images
+endif
