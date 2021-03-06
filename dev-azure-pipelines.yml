@@ -1,0 +1,35 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+  branches:
+    include:
+      - dev
+      - release*
+
+pool:
+  name: "vpn-connected self-managed agents"
+
+steps:
+  - script: |
+      docker ps -a
+      docker --version
+    displayName: "Check Docker installation "
+
+  - task: DownloadSecureFile@1
+    name: aws_creds
+    displayName: "Download source script to export AWS creds"
+    inputs:
+      secureFile: "i-platform-dev-aws-creds-20210207.sh"
+
+  - task: Bash@3
+    inputs:
+      targetType: "inline"
+      script: |
+        sudo chown root:root $(aws_creds.secureFilePath)
+        sudo chmod a+r $(aws_creds.secureFilePath)
+        . $(aws_creds.secureFilePath)
+        aws s3 ls
+        make upload_dev_images
