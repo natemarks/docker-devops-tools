@@ -3,6 +3,24 @@
 
 ## How this image is  published
 
+The image uses strict semver. only major version bumps should  have breaking changes
+
+When ready to relesae a new version
+ - create a 'release*' branch from the  default branch. example: release_123
+ - merge the desired  commits in from other branches (dev, feature, etc)
+ - push the  release branch. The pipeline will build it tagged with its git hash
+ - test it however
+When ready to release:
+```shell
+# set the part to major/minor/patch as appropriate for your changes
+make part=patch branch=release_123 release
+# push the updated default branch
+git push origin 
+# build and push the imagw with the semver tag
+make upload_release_images
+```
+   
+
 ** 'latest' should never be consumed by production pipelines. It's only used for tests **
 
 1) The master branch is protected. It has to be carefully, manually version bumped or we risk deploying immature changes to production pipelines.The pipeline for the master branch does the following:
