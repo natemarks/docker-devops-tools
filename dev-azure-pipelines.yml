@@ -18,18 +18,16 @@ steps:
       docker --version
     displayName: "Check Docker installation "
 
-  - task: DownloadSecureFile@1
-    name: aws_creds
-    displayName: "Download source script to export AWS creds"
-    inputs:
-      secureFile: "i-platform-dev-aws-creds-20210207.sh"
-
   - task: Bash@3
     inputs:
       targetType: "inline"
       script: |
-        sudo chown root:root $(aws_creds.secureFilePath)
-        sudo chmod a+r $(aws_creds.secureFilePath)
-        . $(aws_creds.secureFilePath)
-        sudo apt-get install -y shellcheck
-        make upload_dev_images
+        make local_build
+
+- task: ECRPushImage@1
+  inputs:
+    awsCredentials: 'admin access to i-platform-dev AWS account(151924297945)'
+    regionName: 'us-east-1'
+    imageSource: 'imagename'
+    sourceImageName: 'devops-tools'
+    repositoryName: '151924297945.dkr.ecr.us-east-1.amazonaws.com'
