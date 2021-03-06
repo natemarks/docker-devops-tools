@@ -10,7 +10,7 @@ trigger:
       - release*
 
 pool:
-  name: "vpn-connected self-managed agents"
+  vmImage: "ubuntu-latest"
 
 steps:
   - script: |
@@ -31,6 +31,5 @@ steps:
         sudo chown root:root $(aws_creds.secureFilePath)
         sudo chmod a+r $(aws_creds.secureFilePath)
         . $(aws_creds.secureFilePath)
-        aws s3 ls
         sudo apt-get install -y shellcheck
         make upload_dev_images
