@@ -32,4 +32,5 @@ steps:
         sudo chmod a+r $(aws_creds.secureFilePath)
         . $(aws_creds.secureFilePath)
         aws s3 ls
+        sudo apt-get install -y shellcheck
         make upload_dev_images
