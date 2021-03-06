@@ -8,8 +8,6 @@ trigger:
     include:
       - dev
       - release*
-      - master
-
 pool:
   vmImage: "ubuntu-latest"
 
