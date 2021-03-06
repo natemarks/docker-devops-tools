@@ -24,10 +24,10 @@ steps:
       script: |
         make local_build
 
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'admin access to i-platform-dev AWS account(151924297945)'
-    regionName: 'us-east-1'
-    imageSource: 'imagename'
-    sourceImageName: 'devops-tools'
-    repositoryName: '151924297945.dkr.ecr.us-east-1.amazonaws.com'
+  - task: ECRPushImage@1
+    inputs:
+      awsCredentials: 'admin access to i-platform-dev AWS account(151924297945)'
+      regionName: 'us-east-1'
+      imageSource: 'imagename'
+      sourceImageName: 'devops-tools'
+      repositoryName: '151924297945.dkr.ecr.us-east-1.amazonaws.com'
