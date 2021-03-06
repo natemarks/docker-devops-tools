@@ -8,11 +8,16 @@ MAIN_BRANCH := master
 help: ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-rm_venv: ## use mk_venv instead
+rm_venv: ## use clean-venv instead
 	rm -rf .venv
 
-mk_venv: rm_venv  ## delete and recreate venv
+clean-venv: rm_venv  ## delete and recreate venv
 	python3 -m venv .venv
+	( \
+			. .venv/bin/activate; \
+			pip install --upgrade pip setuptools; \
+			pip install -r requirements.txt; \
+	)
 
 python_clean: ## delete python cache files, pyc etc
 	find . -name '*.pyc' -exec rm -f {} \;
@@ -32,7 +37,7 @@ git-status: ## Checks git status before executing build steps
 		exit 1; \
 	fi
 
-lint: mk_venv  ## Run static code checks
+lint: clean-venv  ## Run static code checks
 	@echo Run static code checks
 	shellcheck scripts/*.sh
 
@@ -44,7 +49,7 @@ test: lint ## run tests before building the docker container
 			python3 -m pytest ./test_pre_build.py;\
 	)
 
-post_build_test: mk_venv ## Run post build docker tests
+post_build_test: clean-venv ## Run post build docker tests
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
