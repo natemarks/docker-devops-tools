@@ -1,41 +1,39 @@
 #!/usr/bin/env python3
 
-"""Log current aws identity data
+""" Log aws account information to stdout and log file in json format
+
+A convenient example of a python utility script on the image
 
 """
 import argparse
 import logging
-import json_logging
 import sys
+import boto3
+import json_logging
 
 
 def get_logger(verbose=False):
-    # log is initialized without a web framework name
-    # log is initialized without a web framework name
+    """return a logger object
+    :rtype: logging.Logger
+    """
     json_logging.init_non_web(enable_json=True)
     if verbose:
-        ll = logging.DEBUG
+        log_level = logging.DEBUG
     else:
-        ll = logging.INFO
+        log_level = logging.INFO
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(ll)
-    ch = logging.StreamHandler(sys.stdout)
-    ch.setLevel(ll)
+    logger.setLevel(log_level)
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(log_level)
     # create file handler which logs even debug messages
-    fh = logging.FileHandler("aws_whoami.log")
-    fh.setLevel(ll)
+    file_handler = logging.FileHandler("aws_whoami.log")
+    file_handler.setLevel(log_level)
 
-    logger.addHandler(ch)
-    logger.addHandler(fh)
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
 
     return logger
-
-
-def log_something():
-    logger = get_logger()
-    stuff_to_log = {"color": "blue", "height": "medium"}
-    return stuff_to_log
 
 
 def aws_user(aws_region="us-east-1"):
@@ -46,7 +44,6 @@ def aws_user(aws_region="us-east-1"):
 
     :rtype: List[boto3.resources.factory.ec2.Instance]
     """
-    import boto3
 
     session = boto3.Session(region_name=aws_region)
     iam_resource = session.resource("iam")
@@ -55,7 +52,7 @@ def aws_user(aws_region="us-east-1"):
     return {
         "CURRENT_USER_ID": current_user.user_id,
         "CURRENT_USER_NAME": current_user.user_name,
-        "CURRENT_USER_DESC": "Put some real description here. get it from a config file lookup?",
+        "CURRENT_USER_DESC": "Put some real description here",
         "CURRENT_ACCOUNT": sts_client.get_caller_identity().get("Account"),
         "CURRENT_ACCOUNT_ID": sts_client.get_caller_identity().get("UserId"),
         "CURRENT_ACCOUNT_ARN": sts_client.get_caller_identity().get("Arn"),
@@ -64,35 +61,33 @@ def aws_user(aws_region="us-east-1"):
 
 
 def parse_args(args):
+    """Parse cli arguments"""
     parser = argparse.ArgumentParser(
         description="Write current aws user account to stdout and log file in json format",
-        prog="aws_whoami",
+        prog="aws_whoami.py",
     )
     parser.add_argument(
+        "-v",
         "--verbose",
         action="store_true",
         dest="verbose",
         help="Set log level to debug",
     )
+    return parser.parse_args(args)
 
 
 def main():
-    import os
-
+    """ Main
+    """
     logger = get_logger()
+    parser = parse_args(sys.argv[1:])
 
-    # Get a argparse.Namespace from the CLI args
-    if len(sys.argv) > 0:
-        parser = parse_args(sys.argv[1:])
-        if getattr(parser, "help", False):
-            parser.print_help(sys.stderr)
-            return 0
-        verbose = getattr(parser, "verbose", False)
+    verbose = getattr(parser, "verbose", False)
+    if verbose:
+        logger.setLevel(logging.DEBUG)
 
-    # logger = get_logger(verbose=verbose)
     res = aws_user()
     logger.info("aws_whoami", extra={"props": res})
-    logger.info("aws_whoami", extra={"props": log_something()})
 
     return 0
 

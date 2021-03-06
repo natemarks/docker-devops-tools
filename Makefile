@@ -37,11 +37,33 @@ git-status: ## Checks git status before executing build steps
 		exit 1; \
 	fi
 
-lint: clean-venv  ## Run static code checks
-	@echo Run static code checks
+lint: ## Run static code checks
+	@echo Run shellcheck against scripts/
 	shellcheck scripts/*.sh
 
-test: lint ## run tests before building the docker container
+pylint: ## Run static code checks
+	@echo Run pylint against scripts/
+	( \
+			. .venv/bin/activate; \
+			pylint scripts; \
+	)
+
+blacken: ## Use black to reformat files
+	@echo Run blacken against scripts/
+	( \
+			. .venv/bin/activate; \
+			black --line-length 79 scripts; \
+	)
+
+black_check: ## Run black in check mode
+	@echo Run blacken against scripts/
+	( \
+			. .venv/bin/activate; \
+			black --check --line-length 79 scripts; \
+	)
+static-checks: clean-venv lint pylint black_check ## Run all local static checks
+
+test: static-checks ## run tests before building the docker container
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
