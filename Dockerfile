@@ -15,6 +15,7 @@ RUN apt-get update && \
   wget \
   golang \
   openssh-server \
+  shellcheck \
   && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt /requirements.txt

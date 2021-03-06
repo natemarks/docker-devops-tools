@@ -13,6 +13,7 @@ import pytest
         ("./Dockerfile", "ca-certificates"),
         ("./requirements.txt", "molecule"),
         ("./requirements.txt", "ansible"),
+        ("./requirements.txt", "ansible-lint"),
         ("./requirements.txt", "awscli"),
         ("./requirements.txt", "bcrypt"),
         ("./requirements.txt", "boto3"),

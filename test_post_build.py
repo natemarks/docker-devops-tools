@@ -24,6 +24,7 @@ test the exit code for each
         ("{} terraform --version".format(DOCKER_CMD),0),
         ("{} terragrunt --version".format(DOCKER_CMD),0),
         ("{} kubergrunt --version".format(DOCKER_CMD),0),
+        ("{} shellcheck --version".format(DOCKER_CMD),0),
         ("{} packer --version".format(DOCKER_CMD),0),
         ("{} ansible --version".format(DOCKER_CMD),0),
         ("{} python3 --version".format(DOCKER_CMD),0),

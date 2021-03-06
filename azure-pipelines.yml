@@ -10,7 +10,7 @@ trigger:
       - release*
 
 pool:
-  vmImage: "ubuntu-latest"
+  name: "vpn-connected self-managed agents"
 
 steps:
   - script: |
