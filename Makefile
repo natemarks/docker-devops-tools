@@ -113,8 +113,6 @@ upload_release_images: build_release_image post_build_test docker-login ## push 
 
 upload_dev_images: local_build ## push images to registry and upload python package to artifacts
 	( \
-	   . .venv/bin/activate; \
-       aws ecr get-login --no-include-email  --region us-east-1; \
        docker tag devops-tools:latest 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools; \
        docker tag devops-tools:$(COMMIT_HASH) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
@@ -135,3 +133,9 @@ ifeq ($(CURRENT_BRANCH), $(MAIN_BRANCH))
 else
 	@make upload_dev_images
 endif
+
+get_commit: ## echo the commit hash
+	@echo $(COMMIT_HASH)
+
+get_version: ## echo the version
+	@echo $(VERSION)
