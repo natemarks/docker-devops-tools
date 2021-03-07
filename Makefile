@@ -25,9 +25,8 @@ python_clean: ## delete python cache files, pyc etc
 	find . -name '__pycache__' -exec rm -rf {} \;
 	find . -name '*~' -exec rm -f  {} \;
 
-
-docker-clean: ## remove all local docker images
-	-docker rmi -f $(shell docker images | grep devops-tools | tr -s ' ' | cut -d ' ' -f 3)
+docker-clean: ## Delete all local devops-tools images
+	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
 
 git-status: ## Checks git status before executing build steps
 	@status=$$(git status --porcelain); \
@@ -85,9 +84,6 @@ local_docker_build: test ## build the docker image locally with latest/hash tag
 
 local_build:  local_docker_build post_build_test
 
-local_clean: ## Delete all local devops-tools images
-	docker images --filter='reference=devops-tools' --format='{{.Repository}}:{{.Tag}}' | xargs docker rmi --force
-
 bump: test ## bump version:  make part=patch bump
 	( \
 			. .venv/bin/activate; \
@@ -107,15 +103,12 @@ build_release_image:
 upload_release_images: build_release_image post_build_test docker-login ## push images to registry and upload python package to artifacts
 	( \
        docker tag devops-tools:$(VERSION) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
-       docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
     )
 
 upload_dev_images: local_build ## push images to registry and upload python package to artifacts
 	( \
-       docker tag devops-tools:latest 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools; \
        docker tag devops-tools:$(COMMIT_HASH) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
-       docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:latest; \
        docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
     )
 
@@ -125,14 +118,6 @@ release: git-status ## checkout main, merge in relesae branch, bump nad push
 	git checkout $(MAIN_BRANCH)
 	git pull --ff-only
 	@make part=$(part) bump
-
-
-upload_images:  ## run correct upload depending on the branch
-ifeq ($(CURRENT_BRANCH), $(MAIN_BRANCH))
-	@make upload_release_images
-else
-	@make upload_dev_images
-endif
 
 get_commit: ## echo the commit hash
 	@echo $(COMMIT_HASH)
