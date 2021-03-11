@@ -84,7 +84,7 @@ local_docker_build: test ## build the docker image locally with latest/hash tag
 
 local_build:  local_docker_build post_build_test
 
-bump: test ## bump version:  make part=patch bump
+bump: git-status test ## bump version:  make part=patch bump
 	( \
 			. .venv/bin/activate; \
 			pip install --upgrade pip setuptools; \
