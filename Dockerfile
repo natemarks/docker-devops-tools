@@ -18,6 +18,10 @@ RUN apt-get update && \
   shellcheck \
   && rm -rf /var/lib/apt/lists/*
 
+RUN mkdir /root/.ssh
+COPY ssh/config /root/.ssh
+RUN chmod 644 /root/.ssh/config
+
 COPY requirements.txt /requirements.txt
 
 RUN pip3 install -r /requirements.txt

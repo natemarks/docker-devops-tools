@@ -36,7 +36,7 @@ git-status: ## Checks git status before executing build steps
 		exit 1; \
 	fi
 
-lint: ## Run static code checks
+shellcheck: ## Run static code checks
 	@echo Run shellcheck against scripts/
 	shellcheck scripts/*.sh
 
@@ -60,7 +60,7 @@ black_check: ## Run black in check mode
 			. .venv/bin/activate; \
 			black --check --line-length 79 scripts; \
 	)
-static-checks: clean-venv lint pylint black_check ## Run all local static checks
+static-checks: clean-venv shellcheck pylint black_check ## Run all local static checks
 
 test: static-checks ## run tests before building the docker container
 	( \
