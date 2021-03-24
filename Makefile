@@ -80,7 +80,7 @@ post_build_test: clean-venv ## Run post build docker tests
 
 local_docker_build: test ## build the docker image locally with latest/hash tag
 	@echo Run static code checks
-	docker build --tag devops-tools:latest --tag devops-tools:$(COMMIT_HASH) .
+	docker build --tag devops-tools:$(VERSION) --tag devops-tools:$(COMMIT_HASH) .
 
 local_build:  local_docker_build post_build_test
 

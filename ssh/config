@@ -1,8 +1,15 @@
-Host *
+
+Host stash.imprivata.com
   IdentitiesOnly yes
   AddKeysToAgent yes
-Host stash.imprivata.com
+  HostName stash.imprivata.com
   IdentityFile /root/.ssh/id_azure_agent_stash
+  LogLevel DEBUG3
+
 # change ssh key from Neha's to a service user
 Host github.com
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+  HostName github.com
   IdentityFile /root/.ssh/id_ed25519_github_imprivata
+  LogLevel DEBUG3
