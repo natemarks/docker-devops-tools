@@ -80,7 +80,7 @@ post_build_test: clean-venv ## Run post build docker tests
 
 local_docker_build: test ## build the docker image locally with latest/hash tag
 	@echo Run static code checks
-	docker build --tag devops-tools:latest --tag devops-tools:$(COMMIT_HASH) .
+	docker build --tag devops-tools:latest --tag devops-tools:$(COMMIT_HASH) --tag devops-tools:$(VERSION) .
 
 local_build:  local_docker_build post_build_test
 
@@ -124,3 +124,13 @@ get_commit: ## echo the commit hash
 
 get_version: ## echo the version
 	@echo $(VERSION)
+
+build_cache_clone: ## build cache_clone executable
+	$(eval TD=$(shell mktemp -d))
+	@echo $(TD)
+	git clone git@github.com:imprivata-cloud/cache_clone.git $(TD)
+	docker run --rm -v $(TD):/usr/src/myapp \
+	-v $(PWD):/usr/src/myapp/build \
+	--env GOOS=linux \
+	--env GOARCH=amd64 \
+	-w /usr/src/myapp golang:1.15.8 go build -v -o /usr/src/myapp/build/cache_clone
