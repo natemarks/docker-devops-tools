@@ -20,7 +20,7 @@ steps:
       view:
       definition: 'f8d5ad36-f537-4764-bd01-464cd2a87754'
       version: '0.0.5'
-      downloadPath: '$(System.ArtifactsDirectory)'
+      downloadPath: '$(System.DefaultWorkingDirectory)'
 
   - task: Bash@3
     inputs:
