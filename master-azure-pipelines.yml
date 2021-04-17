@@ -2,6 +2,10 @@
 # Create and test a Python package on multiple Python versions.
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
   branches:
@@ -13,10 +17,22 @@ pool:
   vmImage: "ubuntu-latest"
 
 steps:
+  - task: DownloadPackage@1
+    inputs:
+      packageType: 'upack'
+      feed: '/a2d00de0-dea2-48f5-ac22-ca87108c74a7'
+      view:
+      definition: 'f8d5ad36-f537-4764-bd01-464cd2a87754'
+      version: '0.0.5'
+      downloadPath: '$(System.ArtifactsDirectory)'
+
   - task: Bash@3
     inputs:
       targetType: "inline"
       script: |
+        find . -type f cache_clone
+        mkdir cache_clone
+        tar -xzvf cache_clone.*.tar.gz -C cache_clone
         make local_build
 
   - bash: |

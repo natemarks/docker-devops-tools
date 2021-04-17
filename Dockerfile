@@ -46,7 +46,7 @@ COPY scripts /scripts
 RUN chmod -R 755 /scripts
 COPY ansible/ /etc/ansible/
 
-COPY cache_clone /usr/local/bin
+COPY cache_clone/linux/amd64/cache_clone /usr/local/bin
 RUN chmod 755 /usr/local/bin/cache_clone
 
 WORKDIR /azp
