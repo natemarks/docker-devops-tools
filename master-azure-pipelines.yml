@@ -26,9 +26,9 @@ steps:
     inputs:
       targetType: "inline"
       script: |
-        find . -type f -print
         mkdir cache_clone
         tar -xzvf cache_clone.0.0.5.tar.gz -C cache_clone
+        find . -type f -print
         make local_build
 
   - bash: |
