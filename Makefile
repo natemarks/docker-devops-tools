@@ -102,14 +102,14 @@ build_release_image:
 
 upload_release_images: build_release_image post_build_test docker-login ## push images to registry and upload python package to artifacts
 	( \
-       docker tag devops-tools:$(VERSION) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
-       docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
+       docker tag devops-tools:$(VERSION) $(AWS_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
+       docker push $(AWS_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(VERSION); \
     )
 
 upload_dev_images: local_build ## push images to registry and upload python package to artifacts
 	( \
-       docker tag devops-tools:$(COMMIT_HASH) 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
-       docker push 151924297945.dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
+       docker tag devops-tools:$(COMMIT_HASH) $(AWS_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
+       docker push $(AWS_ACCOUNT_ID).dkr.ecr.us-east-1.amazonaws.com/devops-tools:$(COMMIT_HASH); \
     )
 
 # make part=patch branch=release_xyz release
