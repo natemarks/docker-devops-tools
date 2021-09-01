@@ -46,8 +46,8 @@ COPY scripts /scripts
 RUN chmod -R 755 /scripts
 COPY ansible/ /etc/ansible/
 
-RUN curl fsSL https://github.com/natemarks/cache_clone/releases/download/v0.1.4/cache_clone_linux_amd64  \
-  --output /usr/local/bin/cache_clone && chmod 755 /usr/local/bin/cache_clone
+RUN curl -fsSL https://github.com/natemarks/cache_clone/releases/download/v0.1.4/cache_clone_linux_amd64 \
+--output /usr/local/bin/cache_clone && chmod 755 /usr/local/bin/cache_clone
 
 WORKDIR /azp
 CMD ["terraform" , "--version"]
