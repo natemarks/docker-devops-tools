@@ -1,7 +1,7 @@
 .PHONY: lint pre_build_test help
 .DEFAULT_GOAL := help
 
-VERSION := 0.0.34
+VERSION := 0.0.35
 COMMIT_HASH := $(shell git rev-parse HEAD)
 MAIN_BRANCH := master
 
