@@ -30,11 +30,11 @@ RUN pip3 install -r /requirements.txt
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 \
   && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
-RUN wget https://releases.hashicorp.com/terraform/0.14.8/terraform_0.14.8_linux_amd64.zip && unzip ./terraform_0.14.8_linux_amd64.zip -d /usr/local/bin/
+RUN wget https://releases.hashicorp.com/terraform/1.0.5/terraform_1.0.5_linux_amd64.zip && unzip ./terraform_1.0.5_linux_amd64.zip -d /usr/local/bin/
 
 RUN wget -q -O /usr/local/bin/kubergrunt "https://github.com/gruntwork-io/kubergrunt/releases/download/v0.6.1/kubergrunt_linux_amd64" && chmod +x /usr/local/bin/kubergrunt
 
-RUN curl -fsSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.28.15/terragrunt_linux_amd64 \
+RUN curl -fsSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.31.8/terragrunt_linux_amd64 \
   --output /usr/local/bin/terragrunt && chmod 755 /usr/local/bin/terragrunt
 
 RUN curl -fsSL https://raw.githubusercontent.com/natemarks/git_cache_repo/main/mirror_repo.sh?ref=v0.0.2 \
@@ -46,8 +46,8 @@ COPY scripts /scripts
 RUN chmod -R 755 /scripts
 COPY ansible/ /etc/ansible/
 
-COPY cache_clone/linux/amd64/cache_clone /usr/local/bin
-RUN chmod 755 /usr/local/bin/cache_clone
+RUN curl fsSL https://github.com/natemarks/cache_clone/releases/download/v0.1.4/cache_clone_linux_amd64  \
+  --output /usr/local/bin/cache_clone && chmod 755 /usr/local/bin/cache_clone
 
 WORKDIR /azp
 CMD ["terraform" , "--version"]
