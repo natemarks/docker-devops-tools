@@ -12,4 +12,4 @@ chmod 644 /root/.ssh/known_hosts
 ls -la /root/.ssh
 cat /root/.ssh/known_hosts
 cd "${project_dir}"
-terragrunt init && terragrunt apply --terragrunt-non-interactive
+terragrunt init && terragrunt apply -auto-approve
