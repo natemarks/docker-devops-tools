@@ -13,33 +13,22 @@ pool:
   vmImage: "ubuntu-latest"
 
 steps:
-  - task: UniversalPackages@0
-    inputs:
-      command: 'download'
-      downloadDirectory: '$(System.DefaultWorkingDirectory)'
-      feedsToUse: 'internal'
-      vstsFeed: 'a2d00de0-dea2-48f5-ac22-ca87108c74a7'
-      vstsFeedPackage: 'f8d5ad36-f537-4764-bd01-464cd2a87754'
-      vstsPackageVersion: '0.0.5'
 
   - task: Bash@3
     inputs:
       targetType: "inline"
       script: |
-        mkdir cache_clone
-        tar -xzvf cache_clone.0.0.5.tar.gz -C cache_clone
-        find . -type f -print
         make local_build
 
   - bash: |
-      IMAGE_VERSION="$(make get_version)"
-      echo "##vso[task.setvariable variable=image_version]$IMAGE_VERSION"
+      IMAGE_COMMIT="$(make get_commit)"
+      echo "##vso[task.setvariable variable=image_commit]$IMAGE_COMMIT"
 
   - task: ECRPushImage@1
     inputs:
-      awsCredentials: "admin access to i-platform-dev AWS account(151924297945)"
+      awsCredentials: "imprivata-sandbox azure_pipelines admin user"
       regionName: "us-east-1"
       imageSource: "imagename"
       sourceImageName: "devops-tools"
       repositoryName: "devops-tools"
-      pushTag: $(image_version)
+      pushTag: $(image_commit)
