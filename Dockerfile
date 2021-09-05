@@ -30,7 +30,7 @@ RUN pip3 install -r /requirements.txt
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 \
   && update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 
-RUN wget https://releases.hashicorp.com/terraform/1.0.5/terraform_1.0.5_linux_amd64.zip && unzip ./terraform_1.0.5_linux_amd64.zip -d /usr/local/bin/
+RUN wget https://releases.hashicorp.com/terraform/0.12.31/terraform_0.12.31_linux_amd64.zip && unzip ./terraform_0.12.31_linux_amd64.zip -d /usr/local/bin/
 
 RUN wget -q -O /usr/local/bin/kubergrunt "https://github.com/gruntwork-io/kubergrunt/releases/download/v0.6.1/kubergrunt_linux_amd64" && chmod +x /usr/local/bin/kubergrunt
 
